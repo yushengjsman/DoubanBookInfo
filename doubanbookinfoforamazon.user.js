@@ -4,7 +4,7 @@
 // @version        1.0
 // @namespace      
 // @author         yushengjsman
-// @description    
+// @description    using api from http://crashedsoftware-api.herokuapp.com/api/douban/book/isbn/
 // @include        http://www.amazon.cn/*
 // @run-at         document-end
 // ==/UserScript==
