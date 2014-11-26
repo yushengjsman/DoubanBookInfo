@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             douban book info for Amazon.cn
 // @name           douban book info for Amazon.cn
-// @version        1.1
+// @version        2.0
 // @namespace      
 // @author         yushengjsman
 // @description    using douban api JSONP
@@ -10,12 +10,12 @@
 // ==/UserScript==
 
 // http://wiki.greasespot.net/UnsafeWindow
-unsafeWindow.showInfo = function(doubanJson) {
+function showInfo(doubanJson) {
   // 信息插入位置
   var insertPos = document.getElementById('qpeTitleTag_feature_div');
   var insertParent = document.getElementById('centerCol');
   if (doubanJson.msg === 'book_not_found') {
-	var errMsg = document.createTextNode('豆瓣中没有该书信息');
+  var errMsg = document.createTextNode('豆瓣中没有该书信息');
     insertParent.insertBefore(errMsg, insertPos);
     return;
   }
@@ -30,15 +30,19 @@ unsafeWindow.showInfo = function(doubanJson) {
   doubanLink.appendChild(doubanLinkContent);
   doubanInfo.appendChild(doubanRate);
   doubanInfo.appendChild(doubanLink);
-  ratePos.innerHTML = originalContext;
   insertParent.insertBefore(doubanInfo, insertPos)
 }
 
-var ratePos = document.getElementById('byline');
-var originalContext = ratePos.innerHTML;
+var showInfoScript = document.createElement('script');
+showInfoScript.appendChild(document.createTextNode(showInfo));
+
+(document.body || document.head || document.documentElement).appendChild(showInfoScript);
+
+//var ratePos = document.getElementById('byline');
+//var originalContext = ratePos.innerHTML;
 //console.log(ratePos.innerHTML);
-var tempStr = '正在从豆瓣查找该书信息';
-ratePos.innerHTML = ratePos.innerHTML + tempStr;
+//var tempStr = '正在从豆瓣查找该书信息';
+//ratePos.innerHTML = ratePos.innerHTML + tempStr;
 // find book isbn
 var bookDetail = document.getElementById('detail_bullets_id').getElementsByClassName('content') [0].childNodes[1].children;
 var flag = 0;

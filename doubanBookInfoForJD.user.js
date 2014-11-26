@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             DBINFO_JD
 // @name           DoubanBookInfo_jd
-// @version        1.0
+// @version        2.0
 // @namespace      
 // @author         
 // @description    
@@ -10,8 +10,7 @@
 // ==/UserScript==
 
 // http://wiki.greasespot.net/UnsafeWindow
-unsafeWindow.showInfo = function(doubanJson) {
-  //console.log("dsafefe!!");
+function showInfo(doubanJson) {
   // 信息插入的位置
   var insertPos = document.getElementById('name');
   if (doubanJson.msg === 'book_not_found') {
@@ -36,6 +35,11 @@ unsafeWindow.showInfo = function(doubanJson) {
   //var insertPos = document.getElementById('name');
   insertPos.appendChild(doubanInfo);
 }
+
+var showInfoScript = document.createElement('script');
+showInfoScript.appendChild(document.createTextNode(showInfo));
+
+(document.body || document.head || document.documentElement).appendChild(showInfoScript);
 
 // 插入豆瓣信息的位置
 //var ratePos = document.getElementById('name');
