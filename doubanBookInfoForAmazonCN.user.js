@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             douban book info for Amazon.cn
 // @name           douban book info for Amazon.cn
-// @version        1.0
+// @version        1.1
 // @namespace      
 // @author         yushengjsman
 // @description    using douban api JSONP
@@ -11,14 +11,17 @@
 
 // http://wiki.greasespot.net/UnsafeWindow
 unsafeWindow.showInfo = function(doubanJson) {
-  //console.log("dsafefe!!");
+  // 信息插入位置
+  var insertPos = document.getElementById('qpeTitleTag_feature_div');
+  var insertParent = document.getElementById('centerCol');
   if (doubanJson.msg === 'book_not_found') {
-    ratePos.innerHTML = originalContext + ' 豆瓣中没有该书信息。';
+	var errMsg = document.createTextNode('豆瓣中没有该书信息');
+    insertParent.insertBefore(errMsg, insertPos);
     return;
   }
-  //console.log(doubanJson.alt);
 
   var doubanInfo = document.createElement('span');
+  doubanInfo.setAttribute('style', 'color:green; font-size:14px')
   var doubanRate = document.createTextNode('豆瓣评分：' + doubanJson.rating.average + '（' + doubanJson.rating.numRaters + '人评分）');
   var doubanLink = document.createElement('a');
   doubanLink.setAttribute('href', doubanJson.alt);
@@ -27,10 +30,6 @@ unsafeWindow.showInfo = function(doubanJson) {
   doubanLink.appendChild(doubanLinkContent);
   doubanInfo.appendChild(doubanRate);
   doubanInfo.appendChild(doubanLink);
-  var insertPos = document.getElementById('qpeTitleTag_feature_div');
-  var insertParent = document.getElementById('centerCol');
-  //console.log(doubanJson.alt);
-  // console.log("FFUCK");
   ratePos.innerHTML = originalContext;
   insertParent.insertBefore(doubanInfo, insertPos)
 }
